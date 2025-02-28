@@ -16,7 +16,7 @@ class test {
         assertEquals(2, ScientificCalculator.factorial(2));
         assertEquals(6, ScientificCalculator.factorial(3));
         assertEquals(24, ScientificCalculator.factorial(4));
-        assertEquals(120, ScientificCalculator.factorial(7));
+        assertEquals(120, ScientificCalculator.factorial(6));
     }
 
     @Test

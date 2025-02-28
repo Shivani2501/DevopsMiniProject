@@ -47,7 +47,7 @@ pipeline {
         stage('Push Docker Images') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker-hub-credentials') {
+                    docker.withRegistry('', 'DockerHubCred') {
                         sh 'docker tag calculator shiv2501/calculator:latest'
                         sh 'docker push shiv2501/calculator:latest'
                     }

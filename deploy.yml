@@ -31,4 +31,4 @@
       ignore_errors: yes
 
     - name: Run Java Application Container
-      shell: docker run -it -d --name calculator shiv2501/calculator
+      shell: docker run -it -d --restart=always --name calculator shiv2501/calculator

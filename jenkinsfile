@@ -20,25 +20,26 @@ pipeline {
                 }
             }
         }
+
         stage('Build & Test') {
-             steps {
-                  script {
-                        sh 'mvn clean package' // Build the Java project
-                        sh 'mvn test' // Run unit tests
-                        }
-                    }
+            steps {
+                script {
+                    sh 'mvn clean package' // Build the Java project
+                    sh 'mvn test' // Run unit tests
                 }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
                 script {
                     def imageExists = sh(script: "docker images -q ${DOCKER_IMAGE_NAME}", returnStdout: true).trim()
-                                        if (imageExists) {
-                                            echo "Docker image already exists. Skipping build."
-                                        } else {
-                                            echo "Building new Docker image..."
-                                            docker.build("${DOCKER_IMAGE_NAME}", '.')
-
+                    if (imageExists) {
+                        echo "Docker image already exists. Skipping build."
+                    } else {
+                        echo "Building new Docker image..."
+                        sh "docker build -t ${DOCKER_IMAGE_NAME} ."
+                    }
                 }
             }
         }
@@ -46,10 +47,9 @@ pipeline {
         stage('Push Docker Images') {
             steps {
                 script {
-                                        docker.withRegistry('', 'docker-hub-credentials') {
-                                            sh 'docker tag rksingh5/scientific-calculator rksingh5/scientific-calculator:latest'
-                                            sh 'docker push rksingh5/scientific-calculator'
-
+                    docker.withRegistry('', 'docker-hub-credentials') {
+                        sh 'docker tag calculator shiv2501/calculator:latest'
+                        sh 'docker push shiv2501/calculator:latest'
                     }
                 }
             }
@@ -59,13 +59,8 @@ pipeline {
             steps {
                 script {
                     withEnv(["ANSIBLE_HOST_KEY_CHECKING=False"]) {
-                                            ansiblePlaybook(
-                                                playbook: 'deploy.yml',
-                                                inventory: 'hosts.ini'
-                                            )
-                                        }
-
-
+                        sh 'ansible-playbook -i hosts.ini deploy.yml'
+                    }
                 }
             }
         }
@@ -86,5 +81,4 @@ pipeline {
             cleanWs()
         }
     }
-}
 }

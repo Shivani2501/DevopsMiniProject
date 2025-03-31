@@ -8,7 +8,7 @@ package org.example;
 //         System.out.print("Enter a number to find it's square: ");
 //         int number=scanner.nextInt();
 //
-//         System.out.println("Square: "+calculateSaqure(number));
+
 //         scanner.close();
 //        }
 //    }

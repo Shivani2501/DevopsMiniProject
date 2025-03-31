@@ -4,7 +4,7 @@ package org.example;
 //// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 //public class SquareCalculator {
 
-//         Scanner scanner=new Scanner(System.in);
+
 //         System.out.print("Enter a number to find it's square: ");
 //         int number=scanner.nextInt();
 //
